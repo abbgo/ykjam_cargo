@@ -7,6 +7,7 @@ import 'package:ykjam_cargo/datas/post_data.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 import 'package:ykjam_cargo/pages/add_post_page.dart';
 import 'package:ykjam_cargo/pages/posts_page.dart';
@@ -188,8 +189,13 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                             context: context,
                                                             builder: (context) {
                                                               return AlertDialog(
-                                                                title: const Text(
-                                                                    "Üns beriň!"),
+                                                                title: Text(
+                                                                  "Üns beriň!",
+                                                                  style: TextStyle(
+                                                                      fontSize: calculateFontSize(
+                                                                          context,
+                                                                          20)),
+                                                                ),
                                                                 content:
                                                                     SelectableText
                                                                         .rich(
@@ -198,14 +204,15 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                                             index]
                                                                         .title,
                                                                     style:
-                                                                        const TextStyle(
+                                                                        TextStyle(
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold,
-                                                                      fontSize:
-                                                                          18,
+                                                                      fontSize: calculateFontSize(
+                                                                          context,
+                                                                          16),
                                                                     ),
-                                                                    children: const <TextSpan>[
+                                                                    children: <TextSpan>[
                                                                       TextSpan(
                                                                         text:
                                                                             ' - bildiriş hemişelik ýok ediljekdir !',
@@ -213,8 +220,9 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                                             TextStyle(
                                                                           fontWeight:
                                                                               FontWeight.normal,
-                                                                          fontSize:
-                                                                              16,
+                                                                          fontSize: calculateFontSize(
+                                                                              context,
+                                                                              16),
                                                                           fontStyle:
                                                                               FontStyle.normal,
                                                                         ),
@@ -229,8 +237,13 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                                       Navigator.pop(
                                                                           context);
                                                                     },
-                                                                    child: const Text(
-                                                                        "GOÝBOLSUN"),
+                                                                    child: Text(
+                                                                      "GOÝBOLSUN",
+                                                                      style: TextStyle(
+                                                                          fontSize: calculateFontSize(
+                                                                              context,
+                                                                              16)),
+                                                                    ),
                                                                   ),
                                                                   TextButton(
                                                                     onPressed:
@@ -288,9 +301,13 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                                         });
                                                                       }
                                                                     },
-                                                                    child:
-                                                                        const Text(
-                                                                            "OK"),
+                                                                    child: Text(
+                                                                      "OK",
+                                                                      style: TextStyle(
+                                                                          fontSize: calculateFontSize(
+                                                                              context,
+                                                                              16)),
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               );
@@ -368,6 +385,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                       ),
                                     ),
                                   ),
+                      ),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
                       ),
                     ),
                   ],

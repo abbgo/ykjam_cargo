@@ -4,12 +4,12 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ykjam_cargo/pages/statute_page.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -113,14 +113,13 @@ class NotificationServices {
   }
 
   Future<String> getDeviceToken() async {
-    String? token = await messaging.getToken();
-    return token!;
+    String? token = await messaging.getAPNSToken();
+    return token ?? "token not found";
   }
 
   void isRefresh() {
     messaging.onTokenRefresh.listen((event) {
       event.toString();
-      print("refresh");
     });
   }
 
@@ -130,6 +129,7 @@ class NotificationServices {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
+      // ignore: use_build_context_synchronously
       handleMessage(context, initialMessage);
     }
 

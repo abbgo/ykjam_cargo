@@ -6,6 +6,7 @@ import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/parts.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 import 'package:ykjam_cargo/pages/home_page.dart';
 import 'package:http/http.dart' as http;
@@ -159,9 +160,10 @@ class _StagesPageState extends State<StagesPage> {
                                             children: [
                                               Text(
                                                 parts[index].name,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 18,
+                                                  fontSize: calculateFontSize(
+                                                      context, 18),
                                                 ),
                                               ),
                                               const Icon(
@@ -174,6 +176,12 @@ class _StagesPageState extends State<StagesPage> {
                                       ),
                                     ),
                                   ),
+                      ),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
                       ),
                     ),
                   ],

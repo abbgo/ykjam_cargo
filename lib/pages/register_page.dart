@@ -467,171 +467,179 @@ class _RegisterPageState extends State<RegisterPage> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10)),
-                            onPressed: () async {
-                              if (_nameCtrl.text == "") {
-                                showToastMethod("Adyňyzy doly ýazyň !");
-                                return;
-                              }
-                              if (_loginCtrl.text.length < 3) {
-                                showToastMethod("Login iň az 3 harp bolmaly !");
-                                return;
-                              }
-                              if (_phone1Ctrl.text.length < 8) {
-                                showToastMethod(
-                                    "Telefon belgiňizi doly görkeziň !");
-                                return;
-                              }
-                              if (!RegExp("^(\\+9936)[1-5][0-9]{6}\$")
-                                  .hasMatch("+993${_phone1Ctrl.text}")) {
-                                showToastMethod(
-                                    "Telefon belgiňizi dogry giriziň !");
-                                return;
-                              }
-                              if (_phone2Ctrl.text != "" &&
-                                  !RegExp("^(\\+9936)[1-5][0-9]{6}\$")
-                                      .hasMatch("+993${_phone2Ctrl.text}")) {
-                                showToastMethod(
-                                    "2-nji telefon belgiňizi dogry giriziň !");
-                                return;
-                              }
-                              if (_emailCtrl.text != "" &&
-                                  !RegExp("^[a-z0-9._%+-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}\$")
-                                      .hasMatch(_emailCtrl.text)) {
-                                showToastMethod(
-                                    "Email adresiňizi dogry giriziň !");
-                                return;
-                              }
-                              if (_passCtrl.text.length < 6) {
-                                showToastMethod(
-                                    "Şahsy otag üçin parol iň az 6 harp bolmalydyr !");
-                                return;
-                              }
-                              if (_verifyPassCtrl.text != _passCtrl.text) {
-                                showToastMethod(
-                                    "Parol we paroly tassyklama deň däl !");
-                                return;
-                              }
-                              if (!_isChecked1) {
-                                showToastMethod(
-                                    "Ulanyjy düzgünleri bilen tanyşyp tassylamagyňyzky haýyş edýäris !");
-                                return;
-                              }
+                          // const SizedBox(height: 15),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10)),
+                              onPressed: () async {
+                                if (_nameCtrl.text == "") {
+                                  showToastMethod("Adyňyzy doly ýazyň !");
+                                  return;
+                                }
+                                if (_loginCtrl.text.length < 3) {
+                                  showToastMethod(
+                                      "Login iň az 3 harp bolmaly !");
+                                  return;
+                                }
+                                if (_phone1Ctrl.text.length < 8) {
+                                  showToastMethod(
+                                      "Telefon belgiňizi doly görkeziň !");
+                                  return;
+                                }
+                                if (!RegExp("^(\\+9936)[1-5][0-9]{6}\$")
+                                    .hasMatch("+993${_phone1Ctrl.text}")) {
+                                  showToastMethod(
+                                      "Telefon belgiňizi dogry giriziň !");
+                                  return;
+                                }
+                                if (_phone2Ctrl.text != "" &&
+                                    !RegExp("^(\\+9936)[1-5][0-9]{6}\$")
+                                        .hasMatch("+993${_phone2Ctrl.text}")) {
+                                  showToastMethod(
+                                      "2-nji telefon belgiňizi dogry giriziň !");
+                                  return;
+                                }
+                                if (_emailCtrl.text != "" &&
+                                    !RegExp("^[a-z0-9._%+-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}\$")
+                                        .hasMatch(_emailCtrl.text)) {
+                                  showToastMethod(
+                                      "Email adresiňizi dogry giriziň !");
+                                  return;
+                                }
+                                if (_passCtrl.text.length < 6) {
+                                  showToastMethod(
+                                      "Şahsy otag üçin parol iň az 6 harp bolmalydyr !");
+                                  return;
+                                }
+                                if (_verifyPassCtrl.text != _passCtrl.text) {
+                                  showToastMethod(
+                                      "Parol we paroly tassyklama deň däl !");
+                                  return;
+                                }
+                                if (!_isChecked1) {
+                                  showToastMethod(
+                                      "Ulanyjy düzgünleri bilen tanyşyp tassylamagyňyzky haýyş edýäris !");
+                                  return;
+                                }
 
-                              StaticData staticData = StaticData();
-                              final connectionResult = await checkNetwork();
+                                StaticData staticData = StaticData();
+                                final connectionResult = await checkNetwork();
 
-                              if (connectionResult) {
-                                final body = {
-                                  'login': _loginCtrl.text,
-                                  'name': _nameCtrl.text,
-                                  'address':
-                                      '${_distictCtrl.text} ${_streetCtrl.text}',
-                                  'email': _emailCtrl.text,
-                                  'phone': '+993${_phone1Ctrl.text}',
-                                  'phone_two': '+993${_phone2Ctrl.text}',
-                                  'password': _passCtrl.text,
-                                  'city': _selectedCountry,
-                                  'region': '$_selectedCity sahercersi'
-                                };
+                                if (connectionResult) {
+                                  final body = {
+                                    'login': _loginCtrl.text,
+                                    'name': _nameCtrl.text,
+                                    'address':
+                                        '${_distictCtrl.text} ${_streetCtrl.text}',
+                                    'email': _emailCtrl.text,
+                                    'phone': '+993${_phone1Ctrl.text}',
+                                    'phone_two': '+993${_phone2Ctrl.text}',
+                                    'password': _passCtrl.text,
+                                    'city': _selectedCountry,
+                                    'region': '$_selectedCity sahercersi'
+                                  };
 
-                                var response = await http.post(
-                                  Uri.parse(
-                                      "${staticData.getUrl()}/register?key=${localStoradge.getGuestToken()}"),
-                                  body: json.encode(body),
-                                );
-
-                                var jsonData = jsonDecode(response.body);
-
-                                if (response.statusCode == 201) {
-                                  Codec<String, String> stringToBase64 =
-                                      utf8.fuse(base64);
-
-                                  String decoded =
-                                      stringToBase64.decode(jsonData['hash']);
-
-                                  String userLogin =
-                                      jsonDecode(decoded)['login'];
-                                  String userPassword =
-                                      jsonDecode(decoded)['password'];
-
-                                  final deviceName = await getDeviceName();
-
-                                  var responseLogin = await http.get(
+                                  var response = await http.post(
                                     Uri.parse(
-                                      "${staticData.getUrl()}/get_token?device=$deviceName&login=$userLogin&password=$userPassword",
-                                    ),
+                                        "${staticData.getUrl()}/register?key=${localStoradge.getGuestToken()}"),
+                                    body: json.encode(body),
                                   );
 
-                                  var loginJsonData =
-                                      jsonDecode(responseLogin.body);
+                                  var jsonData = jsonDecode(response.body);
 
-                                  if (loginJsonData['status']
-                                          .toString()
-                                          .toLowerCase() ==
-                                      'false') {
-                                    showToastMethod(loginJsonData['message']);
-                                  } else {
-                                    if (mounted) {
-                                      final localLocalStoradge =
-                                          Provider.of<LocalStoradge>(context,
-                                              listen: false);
-                                      if (_isChecked) {
-                                        localLocalStoradge.changeUserToken(
-                                            loginJsonData['token']);
+                                  if (response.statusCode == 201) {
+                                    Codec<String, String> stringToBase64 =
+                                        utf8.fuse(base64);
 
-                                        localLocalStoradge.changeGuestToken(
-                                            loginJsonData['token']);
+                                    String decoded =
+                                        stringToBase64.decode(jsonData['hash']);
+
+                                    String userLogin =
+                                        jsonDecode(decoded)['login'];
+                                    String userPassword =
+                                        jsonDecode(decoded)['password'];
+
+                                    final deviceName = await getDeviceName();
+
+                                    var responseLogin = await http.get(
+                                      Uri.parse(
+                                        "${staticData.getUrl()}/get_token?device=$deviceName&login=$userLogin&password=$userPassword",
+                                      ),
+                                    );
+
+                                    var loginJsonData =
+                                        jsonDecode(responseLogin.body);
+
+                                    if (loginJsonData['status']
+                                            .toString()
+                                            .toLowerCase() ==
+                                        'false') {
+                                      showToastMethod(loginJsonData['message']);
+                                    } else {
+                                      if (mounted) {
+                                        final localLocalStoradge =
+                                            Provider.of<LocalStoradge>(context,
+                                                listen: false);
+                                        if (_isChecked) {
+                                          localLocalStoradge.changeUserToken(
+                                              loginJsonData['token']);
+
+                                          localLocalStoradge.changeGuestToken(
+                                              loginJsonData['token']);
+                                        }
+
+                                        localLocalStoradge.changeUserCode(
+                                            loginJsonData['code']);
+
+                                        localLocalStoradge.changeUserName(
+                                            loginJsonData['name']);
+
+                                        localLocalStoradge.changeUserID(
+                                            int.parse(loginJsonData['id']));
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage(),
+                                          ),
+                                        );
                                       }
 
-                                      localLocalStoradge.changeUserCode(
-                                          loginJsonData['code']);
-
-                                      localLocalStoradge.changeUserName(
-                                          loginJsonData['name']);
-
-                                      localLocalStoradge.changeUserID(
-                                          int.parse(loginJsonData['id']));
-
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomePage(),
-                                        ),
-                                      );
+                                      showToastMethod("${jsonData['message']}");
+                                      showToastMethod(
+                                          "Hoş geldiňiz ${_nameCtrl.text}");
                                     }
-
-                                    showToastMethod("${jsonData['message']}");
-                                    showToastMethod(
-                                        "Hoş geldiňiz ${_nameCtrl.text}");
+                                  } else {
+                                    showToastMethod(jsonData['message']);
                                   }
                                 } else {
-                                  showToastMethod(jsonData['message']);
+                                  setState(() {
+                                    _internetConnection = false;
+                                  });
                                 }
-                              } else {
-                                setState(() {
-                                  _internetConnection = false;
-                                });
-                              }
-                            },
-                            child: const Text(
-                              "Hasaba durmak",
-                              style: TextStyle(
-                                color: Colors.white,
+                              },
+                              child: const Text(
+                                "Hasaba durmak",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SliverFillRemaining(
-                      hasScrollBody: true,
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                      ),
                     ),
                   ],
                 ),

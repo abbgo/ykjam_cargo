@@ -88,12 +88,14 @@ class _LoginPageState extends State<LoginPage> {
           });
         },
         child: Scaffold(
+          appBar: AppBar(),
           resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                // padding:
+                //     const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

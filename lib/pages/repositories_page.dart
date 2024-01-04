@@ -179,6 +179,12 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                                   ),
                       ),
                     ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                      ),
+                    ),
                   ],
                 ),
               ),

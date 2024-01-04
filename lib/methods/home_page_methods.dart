@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:ykjam_cargo/datas/contact_data.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/pages/login_page.dart';
 import 'package:ykjam_cargo/pages/posts_page.dart';
 import 'package:ykjam_cargo/pages/register_page.dart';
@@ -44,13 +45,16 @@ _showContactBottomModel(BuildContext context, List<Contact> contacts) {
                               children: [
                                 Text(
                                   "${contact.name} ",
-                                  style: const TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                    fontSize: calculateFontSize(context, 16),
+                                  ),
                                 ),
                                 Text(
                                   contact.value,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: calculateFontSize(context, 16),
+                                  ),
                                 ),
                               ],
                             ),
@@ -109,53 +113,47 @@ _showModalBottomSheet(BuildContext context) {
     builder: (context) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: SizedBox(
-          height: 220,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Ulgama giriň",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
+        child: Wrap(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Ulgama giriň",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
               ),
-              const Text(
-                "Programmanyň esasy funksiýalaryny ulanmak üçin ulgama girmelisiňiz",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black26,
-                ),
+            ),
+            const Text(
+              "Programmanyň esasy funksiýalaryny ulanmak üçin ulgama girmelisiňiz",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black26,
               ),
-              const SizedBox(height: 5),
-              elevationButtonMethod(
-                context,
-                "Içine girmek",
-                Theme.of(context).primaryColor,
-                Colors.white,
-                () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
-                },
-              ),
-              elevationButtonMethod(
-                context,
-                "Hasaba durmak",
-                Theme.of(context).primaryColor,
-                Colors.white,
-                () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterPage()));
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 5),
+            elevationButtonMethod(
+              context,
+              "Içine girmek",
+              Theme.of(context).primaryColor,
+              Colors.white,
+              () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
+              },
+            ),
+            elevationButtonMethod(
+              context,
+              "Hasaba durmak",
+              Theme.of(context).primaryColor,
+              Colors.white,
+              () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPage()));
+              },
+            ),
+          ],
         ),
       );
     },
@@ -170,9 +168,7 @@ Padding elevationButtonMethod(
   Function() onTap,
 ) {
   return Padding(
-    padding: const EdgeInsets.symmetric(
-      vertical: 5,
-    ),
+    padding: const EdgeInsets.only(bottom: 15),
     child: GestureDetector(
       onTap: onTap,
       child: Container(
@@ -187,7 +183,7 @@ Padding elevationButtonMethod(
             text,
             style: TextStyle(
               color: textColor,
-              fontSize: 20,
+              fontSize: calculateFontSize(context, 20),
             ),
             textAlign: TextAlign.center,
           ),
@@ -255,20 +251,22 @@ Padding listTileMethod(String image, String title, subTitle, bool isDisable,
         },
         contentPadding: const EdgeInsets.all(2),
         leading: SizedBox(
-          width: 40,
+          width: 60,
           child: Image.asset(image),
         ),
-        title: Text(title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: isDisable ? Colors.black26 : Colors.black,
-            )),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: calculateFontSize(context, 18),
+            fontWeight: FontWeight.bold,
+            color: isDisable ? Colors.black26 : Colors.black,
+          ),
+        ),
         subtitle: subTitle != ""
             ? Text(
                 subTitle,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: calculateFontSize(context, 12),
                   color: isDisable ? Colors.black26 : Colors.black,
                 ),
               )
@@ -277,49 +275,3 @@ Padding listTileMethod(String image, String title, subTitle, bool isDisable,
     ),
   );
 }
-
-// showInternetErr(
-//   BuildContext context,
-//   bool internetConnection,
-// ) {
-//   return Container(
-//     width: 355,
-//     height: 100,
-//     color: Colors.black87,
-//     child: Padding(
-//       padding: const EdgeInsets.all(10),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//         children: [
-//           const Text(
-//             softWrap: true,
-//             "Internet baglanyşygyňyzy barlaň we täzeden synanşyň",
-//             style: TextStyle(
-//               color: Colors.white,
-//               fontSize: 14,
-//               decoration: TextDecoration.none,
-//               fontFamily: 'Arial',
-//               letterSpacing: 1,
-//             ),
-//           ),
-//           Align(
-//             alignment: Alignment.bottomRight,
-//             child: GestureDetector(
-//               onTap: null,
-//               child: Text(
-//                 "TÄZEDEN SYNANŞYŇ",
-//                 style: TextStyle(
-//                   color: Theme.of(context).primaryColor,
-//                   fontSize: 14,
-//                   decoration: TextDecoration.none,
-//                   fontFamily: 'Arial',
-//                   letterSpacing: 1,
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }

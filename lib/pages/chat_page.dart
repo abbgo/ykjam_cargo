@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:ykjam_cargo/datas/chat_data.dart';
@@ -30,6 +31,7 @@ class _ChatPageState extends State<ChatPage> {
 
   // VARIABLES -------------------------------------------------------------------
   bool _internetConnection = true;
+  bool _sendImage = true;
   String token = "";
   bool _showErr = false;
   bool _loading = true;
@@ -90,8 +92,6 @@ class _ChatPageState extends State<ChatPage> {
           _loading = false;
         });
 
-        _jumpToBottom();
-
         return;
       }
 
@@ -109,18 +109,10 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  _jumpToBottom() {
+  _animateToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent * 2);
-    });
-  }
-
-  _animateToBottom(int height) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent * height,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.linear);
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 100), curve: Curves.linear);
     });
   }
 
@@ -134,10 +126,14 @@ class _ChatPageState extends State<ChatPage> {
       });
     }
 
-    _uploadImage(_image, userID, type);
+    await _uploadImage(_image, userID, type);
   }
 
   Future<void> _uploadImage(File? image, int userID, int type) async {
+    setState(() {
+      _sendImage = false;
+    });
+
     if (_image == null) {
       showToastMethod("Surat saýlanmady");
       return;
@@ -176,6 +172,10 @@ class _ChatPageState extends State<ChatPage> {
     } catch (error) {
       showToastMethod("Surat ugradylmady");
     }
+
+    setState(() {
+      _sendImage = true;
+    });
   }
 
   // DISPOSE -------------------------------------------------------------------
@@ -251,6 +251,14 @@ class _ChatPageState extends State<ChatPage> {
                                 controller: _scrollController,
                                 itemCount: chats.length,
                                 itemBuilder: (context, index) {
+                                  final ScrollDirection direction =
+                                      _scrollController
+                                          .position.userScrollDirection;
+
+                                  if (direction != ScrollDirection.forward) {
+                                    _animateToBottom();
+                                  }
+
                                   String adminType = chats[index].type;
                                   bool isUser =
                                       adminType == "2" || adminType == "4";
@@ -440,7 +448,7 @@ class _ChatPageState extends State<ChatPage> {
                                       chats.add(chat);
                                     });
 
-                                    _animateToBottom(1);
+                                    _animateToBottom();
 
                                     StaticData staticData = StaticData();
                                     final connectionResult =
@@ -495,6 +503,12 @@ class _ChatPageState extends State<ChatPage> {
               left: 15,
               child: !(_internetConnection)
                   ? errorHandleMethod(context, _getChatDatas)
+                  : const SizedBox(),
+            ),
+            Center(
+              child: !(_sendImage)
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor, strokeAlign: 0.5)
                   : const SizedBox(),
             ),
           ],

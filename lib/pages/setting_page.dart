@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/register_page_methods.dart';
 import 'package:ykjam_cargo/methods/setting_page_methods.dart';
 import 'package:http/http.dart' as http;
@@ -316,15 +317,20 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                       Divider(color: Theme.of(context).primaryColor),
                       Padding(
-                        padding: const EdgeInsets.only(left: 5, bottom: 10),
+                        padding: const EdgeInsets.only(left: 0, bottom: 10),
                         child: Row(
                           children: [
                             Icon(
                               Icons.notifications,
                               color: Theme.of(context).primaryColor,
                             ),
-                            const SizedBox(width: 10),
-                            const Text("Duýduryşlary açmak/ýapmak"),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Duýduryşlary açmak/ýapmak",
+                              style: TextStyle(
+                                fontSize: calculateFontSize(context, 16),
+                              ),
+                            ),
                             Transform.scale(
                               scale: 0.8,
                               child: Switch.adaptive(
@@ -350,15 +356,21 @@ class _SettingPageState extends State<SettingPage> {
                                 builder: (context) {
                                   return AlertDialog(
                                     backgroundColor: Colors.white,
-                                    title: const Text(
+                                    title: Text(
                                       "Ulgamdan çykyljakdyr !",
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize:
+                                            calculateFontSize(context, 20),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    content:
-                                        const Text("Ulgamdan çykmakçymy ?"),
+                                    content: Text(
+                                      "Ulgamdan çykmakçymy ?",
+                                      style: TextStyle(
+                                        fontSize:
+                                            calculateFontSize(context, 16),
+                                      ),
+                                    ),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
@@ -367,9 +379,10 @@ class _SettingPageState extends State<SettingPage> {
                                         child: Text(
                                           "GOÝBOLSUN",
                                           style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: calculateFontSize(
+                                                  context, 16)),
                                         ),
                                       ),
                                       TextButton(
@@ -404,6 +417,8 @@ class _SettingPageState extends State<SettingPage> {
                                         child: Text(
                                           "OK",
                                           style: TextStyle(
+                                            fontSize:
+                                                calculateFontSize(context, 16),
                                             color:
                                                 Theme.of(context).primaryColor,
                                           ),

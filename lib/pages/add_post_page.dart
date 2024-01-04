@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/pages/posts_page.dart';
 import 'package:ykjam_cargo/pages/statute_page.dart';
 import 'package:http/http.dart' as http;
@@ -130,11 +131,15 @@ class _AddPostPageState extends State<AddPostPage> {
             builder: (context) {
               return AlertDialog(
                 backgroundColor: Colors.white,
-                title: Text(widget.isAddPostPage
-                    ? "Bildiriş ugradyldy"
-                    : "Bildiriş üýtgedildi"),
-                content: const Text(
-                    "Bildirişiňiz moderasiýa ugradyldy. Moderasiýa kabul edenden soň bildirişiňiz 30 günlik goýular. Wagty dolan bildirişler awtomat ýagdaýda ýatyrylýar"),
+                title: Text(
+                  widget.isAddPostPage
+                      ? "Bildiriş ugradyldy"
+                      : "Bildiriş üýtgedildi",
+                ),
+                content: Text(
+                  "Bildirişiňiz moderasiýa ugradyldy. Moderasiýa kabul edenden soň bildirişiňiz 30 günlik goýular. Wagty dolan bildirişler awtomat ýagdaýda ýatyrylýar",
+                  style: TextStyle(fontSize: calculateFontSize(context, 16)),
+                ),
                 actions: [
                   TextButton(
                       onPressed: () {
@@ -251,14 +256,14 @@ class _AddPostPageState extends State<AddPostPage> {
                             _phoneCtrl,
                             TextInputType.phone,
                             1,
-                            const Center(
+                            Center(
                               widthFactor: 1,
                               child: Text(
                                 " +993",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: calculateFontSize(context, 16),
                                 ),
                               ),
                             ),
@@ -364,6 +369,12 @@ class _AddPostPageState extends State<AddPostPage> {
                       ],
                     ),
                   ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -390,6 +401,8 @@ class _AddPostPageState extends State<AddPostPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextField(
+        style: TextStyle(fontSize: calculateFontSize(context, 16)),
+        textAlignVertical: TextAlignVertical.center,
         enabled: enabled,
         maxLines: maxLines,
         controller: controller,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ykjam_cargo/datas/repository_data.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 import 'package:ykjam_cargo/pages/inven_item_page.dart';
 
@@ -74,7 +75,7 @@ class _InventoryPageState extends State<InventoryPage> {
                                 widget.inventories[index].name,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: calculateFontSize(context, 20),
                                   color: widget.inventories[index].count != 0
                                       ? Colors.black
                                       : Colors.black26,
@@ -83,6 +84,7 @@ class _InventoryPageState extends State<InventoryPage> {
                               Text(
                                 "Ýer sany: ${widget.inventories[index].count}",
                                 style: TextStyle(
+                                  fontSize: calculateFontSize(context, 16),
                                   color: widget.inventories[index].count != 0
                                       ? Colors.black
                                       : Colors.black26,
@@ -91,6 +93,7 @@ class _InventoryPageState extends State<InventoryPage> {
                               Text(
                                 "Göwrümi: ${widget.inventories[index].cube} ${widget.inventories[index].cubeUnit}",
                                 style: TextStyle(
+                                  fontSize: calculateFontSize(context, 16),
                                   color: widget.inventories[index].count != 0
                                       ? Colors.black
                                       : Colors.black26,
@@ -99,6 +102,7 @@ class _InventoryPageState extends State<InventoryPage> {
                               Text(
                                 "Agramy: ${widget.inventories[index].weight} ${widget.inventories[index].weightUnit}",
                                 style: TextStyle(
+                                  fontSize: calculateFontSize(context, 16),
                                   color: widget.inventories[index].count != 0
                                       ? Colors.black
                                       : Colors.black26,
@@ -111,6 +115,12 @@ class _InventoryPageState extends State<InventoryPage> {
                     ),
                   ),
                 ),
+              ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
               ),
             ),
           ],

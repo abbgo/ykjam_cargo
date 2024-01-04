@@ -7,6 +7,7 @@ import 'package:ykjam_cargo/datas/repository_data.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 import 'package:ykjam_cargo/pages/item_page.dart';
 
@@ -307,10 +308,12 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                                           : invenItem
                                                               .items[index]
                                                               .name,
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 16,
+                                                        fontSize:
+                                                            calculateFontSize(
+                                                                context, 16),
                                                       ),
                                                     ),
                                                   ),
@@ -327,14 +330,24 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                                         style: TextStyle(
                                                           color: Colors
                                                               .grey.shade600,
-                                                          fontSize: 13,
+                                                          fontSize:
+                                                              calculateFontSize(
+                                                                  context, 14),
                                                         ),
                                                       ),
                                                       !widget.isUnowned
                                                           ? Text(
                                                               _showSearchBar
-                                                                  ? "\$${searchResult[index].totalPrice}"
-                                                                  : "\$${invenItem.items[index].totalPrice}",
+                                                                  ? searchResult[index]
+                                                                              .totalPrice !=
+                                                                          0
+                                                                      ? "\$${searchResult[index].totalPrice}"
+                                                                      : ""
+                                                                  : invenItem.items[index]
+                                                                              .totalPrice !=
+                                                                          0
+                                                                      ? "\$${invenItem.items[index].totalPrice}"
+                                                                      : "",
                                                               style:
                                                                   const TextStyle(
                                                                 color:
@@ -359,7 +372,9 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                                       style: TextStyle(
                                                         color: Colors
                                                             .grey.shade600,
-                                                        fontSize: 13,
+                                                        fontSize:
+                                                            calculateFontSize(
+                                                                context, 14),
                                                       ),
                                                     ),
                                                   ),
@@ -371,22 +386,54 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                                     children: [
                                                       Column(
                                                         children: [
-                                                          Text(_showSearchBar
-                                                              ? "Ýer sany: ${searchResult[index].count}"
-                                                              : "Ýer sany: ${invenItem.items[index].count}"),
-                                                          Text(_showSearchBar
-                                                              ? "Sany: ${searchResult[index].stuk} st"
-                                                              : "Sany: ${invenItem.items[index].stuk} st"),
+                                                          Text(
+                                                            _showSearchBar
+                                                                ? "Ýer sany: ${searchResult[index].count}"
+                                                                : "Ýer sany: ${invenItem.items[index].count}",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            _showSearchBar
+                                                                ? "Sany: ${searchResult[index].stuk} st"
+                                                                : "Sany: ${invenItem.items[index].stuk} st",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
                                                       Column(
                                                         children: [
-                                                          Text(_showSearchBar
-                                                              ? "Göwrümi: ${searchResult[index].cube} ${searchResult[index].cubeUnit}"
-                                                              : "Göwrümi: ${invenItem.items[index].cube} ${invenItem.items[index].cubeUnit}"),
-                                                          Text(_showSearchBar
-                                                              ? "Agramy: ${searchResult[index].weight} ${searchResult[index].weightUnit}"
-                                                              : "Agramy: ${invenItem.items[index].weight} ${invenItem.items[index].weightUnit}"),
+                                                          Text(
+                                                            _showSearchBar
+                                                                ? "Göwrümi: ${searchResult[index].cube} ${searchResult[index].cubeUnit}"
+                                                                : "Göwrümi: ${invenItem.items[index].cube} ${invenItem.items[index].cubeUnit}",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            _showSearchBar
+                                                                ? "Agramy: ${searchResult[index].weight} ${searchResult[index].weightUnit}"
+                                                                : "Agramy: ${invenItem.items[index].weight} ${invenItem.items[index].weightUnit}",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
                                                     ],
@@ -423,15 +470,15 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                     ),
                                     child: Row(
                                       children: [
-                                        const Expanded(
+                                        Expanded(
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("Jemi göwrüm:"),
-                                              Text("Jemi artyk agramy:"),
-                                              Text("Goşmaça töleg:"),
-                                              Text("Jemi töleg:"),
+                                              textMethod("Jemi göwrüm:"),
+                                              textMethod("Jemi artyk agramy:"),
+                                              textMethod("Goşmaça töleg:"),
+                                              textMethod("Jemi töleg:"),
                                             ],
                                           ),
                                         ),
@@ -442,15 +489,19 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                             children: [
                                               Text(
                                                 invenItem.totalCubeText,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: calculateFontSize(
+                                                      context, 16),
+                                                ),
                                               ),
                                               Text(
                                                 invenItem.extraWeightText,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: calculateFontSize(
+                                                      context, 16),
+                                                ),
                                               ),
                                               GestureDetector(
                                                 onTap: () {
@@ -517,16 +568,28 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                                     Text(
                                                       invenItem
                                                           .servicePriceText,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize:
+                                                            calculateFontSize(
+                                                                context, 16),
+                                                      ),
                                                     ),
                                                     const Icon(Icons.info,
                                                         size: 18),
                                                   ],
                                                 ),
                                               ),
-                                              Text(invenItem.totalPriceText),
+                                              Text(
+                                                invenItem.totalPriceText,
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: calculateFontSize(
+                                                      context, 16),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -536,6 +599,12 @@ class _InvenItemPageState extends State<InvenItemPage> {
                                 )
                               : const Padding(padding: EdgeInsets.zero),
                         )),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                      ),
                     ),
                   ],
                 ),
@@ -553,4 +622,11 @@ class _InvenItemPageState extends State<InvenItemPage> {
       ),
     );
   }
+
+  Text textMethod(String text) => Text(
+        text,
+        style: TextStyle(
+          fontSize: calculateFontSize(context, 16),
+        ),
+      );
 }

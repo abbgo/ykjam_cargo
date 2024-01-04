@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ykjam_cargo/datas/repository_data.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 
 Padding listGeneratePaddingMethod(
     int index,
@@ -57,36 +58,36 @@ Padding listGeneratePaddingMethod(
                       repositories[index].name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: calculateFontSize(context, 20),
                         color: condition ? Colors.black : Colors.black26,
                       ),
                     ),
                     Text(
                       "Ýer sany: ${repositories[index].totalCount}",
                       style: TextStyle(
-                        color: condition ? Colors.black : Colors.black26,
-                      ),
+                          color: condition ? Colors.black : Colors.black26,
+                          fontSize: calculateFontSize(context, 16)),
                     ),
                     Text(
                       "Göwrümi: ${repositories[index].totalKub} ${repositories[index].unitKub}",
                       style: TextStyle(
-                        color: condition ? Colors.black : Colors.black26,
-                      ),
+                          color: condition ? Colors.black : Colors.black26,
+                          fontSize: calculateFontSize(context, 16)),
                     ),
                     Text(
                       "Agramy: ${repositories[index].totalweight} ${repositories[index].unitWeight}",
                       style: TextStyle(
-                        color: condition ? Colors.black : Colors.black26,
-                      ),
+                          color: condition ? Colors.black : Colors.black26,
+                          fontSize: calculateFontSize(context, 16)),
                     ),
                     !isUnowned
                         ? condition
                             ? Text(
                                 "\$${repositories[index].totalPrice}",
-                                style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: calculateFontSize(context, 16)),
                               )
                             : const SizedBox()
                         : const SizedBox(),

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "591725514350",
+    "firebase_url": "https://cargo-tracker-7714b-default-rtdb.firebaseio.com",
+    "project_id": "cargo-tracker-7714b",
+    "storage_bucket": "cargo-tracker-7714b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591725514350:android:f46147cc1c1f5cd93ce07f",
+        "android_client_info": {
+          "package_name": "com.grsofts.cargotracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591725514350-a05t93tisambh9804b4ltllabidp7ngi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARHM7Pb_PhKFc98UFXDx4VsKx6ONDXg7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591725514350-a05t93tisambh9804b4ltllabidp7ngi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

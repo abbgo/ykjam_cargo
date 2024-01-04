@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/helpers/shimmer_loading.dart';
 
 SliverAppBar sliverAppBarMethod(
@@ -22,14 +23,17 @@ SliverAppBar sliverAppBarMethod(
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.only(right: 10, bottom: 5),
                     child: GestureDetector(
                       onTap: onTapSearch,
-                      child: const Icon(Icons.search),
+                      child: const Icon(
+                        Icons.search,
+                        size: 30,
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.only(right: 10, bottom: 5),
                     child: GestureDetector(
                       onTap: () {
                         showModalBottomSheet(
@@ -87,7 +91,10 @@ SliverAppBar sliverAppBarMethod(
                               );
                             });
                       },
-                      child: const Icon(Icons.sort),
+                      child: const Icon(
+                        Icons.sort,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],
@@ -98,6 +105,9 @@ SliverAppBar sliverAppBarMethod(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: SearchBar(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.only(bottom: 2, left: 10),
+                    ),
                     onChanged: search,
                     backgroundColor:
                         MaterialStateProperty.all(Colors.grey.shade300),
@@ -105,11 +115,13 @@ SliverAppBar sliverAppBarMethod(
                     trailing: [
                       IconButton(
                         onPressed: onTapSearch,
-                        icon: const Icon(Icons.close),
+                        icon: const Icon(
+                          Icons.close,
+                          size: 30,
+                        ),
                       )
                     ],
                     hintText: "Gözleg...",
-                    leading: const Icon(Icons.search),
                   ),
                 ),
               ),
@@ -130,10 +142,10 @@ SliverAppBar sliverAppBarMethod(
       titlePadding: const EdgeInsets.only(bottom: 20, left: 10),
       title: Text(
         text,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: calculateFontSize(context, 24)),
       ),
     ),
   );

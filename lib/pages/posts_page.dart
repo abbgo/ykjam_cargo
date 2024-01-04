@@ -94,9 +94,11 @@ class _PostsPageState extends State<PostsPage> {
             }
           }
 
-          setState(() {
-            posts.add(post);
-          });
+          // setState(() {
+          posts.add(post);
+          // });
+
+          if (mounted) setState(() {});
         }
         setState(() {
           _loading = false;
@@ -347,11 +349,6 @@ class _PostsPageState extends State<PostsPage> {
                                               await checkNetwork();
 
                                           if (connectionResult) {
-                                            // var response = await http.put(
-                                            //   Uri.parse(
-                                            //       "${staticData.getUrl()}/viewed_post?key=$userToken&user_id=$userID&post_id=${posts[index].id}"),
-                                            // );
-
                                             var response = await http.put(
                                               Uri.parse(
                                                   "${staticData.getUrl()}/viewed_post?key=$guestToken&post_id=${posts[index].id}"),
@@ -393,8 +390,8 @@ class _PostsPageState extends State<PostsPage> {
                                                           vertical: 30),
                                                       child: Wrap(
                                                         children: [
-                                                          columnMethod(
-                                                              index, posts),
+                                                          columnMethod(index,
+                                                              posts, context),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -447,39 +444,43 @@ class _PostsPageState extends State<PostsPage> {
                                                                     .spaceBetween,
                                                             children: [
                                                               elevatedButtonMethod(
-                                                                  "Haladym",
-                                                                  posts[index]
-                                                                          .isFavorite
-                                                                      ? Icons
-                                                                          .favorite
-                                                                      : Icons
-                                                                          .favorite_border,
-                                                                  () {
-                                                                Provider.of<LocalStoradge>(
-                                                                        context,
-                                                                        listen:
-                                                                            false)
-                                                                    .changePostIDToSharedPref(
-                                                                        posts[index]
-                                                                            .id
-                                                                            .toString());
+                                                                "Haladym",
+                                                                posts[index]
+                                                                        .isFavorite
+                                                                    ? Icons
+                                                                        .favorite
+                                                                    : Icons
+                                                                        .favorite_border,
+                                                                () {
+                                                                  Provider.of<LocalStoradge>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .changePostIDToSharedPref(posts[
+                                                                              index]
+                                                                          .id
+                                                                          .toString());
 
-                                                                setState(
-                                                                  () {
-                                                                    posts[index]
-                                                                        .isFavorite = !posts[
-                                                                            index]
-                                                                        .isFavorite;
-                                                                  },
-                                                                );
-                                                              }, posts),
+                                                                  setState(
+                                                                    () {
+                                                                      posts[index]
+                                                                          .isFavorite = !posts[
+                                                                              index]
+                                                                          .isFavorite;
+                                                                    },
+                                                                  );
+                                                                },
+                                                                posts,
+                                                              ),
                                                               elevatedButtonMethod(
-                                                                  "Paýlaş",
-                                                                  Icons.share,
-                                                                  () async {
-                                                                await Share.share(
-                                                                    "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker");
-                                                              }, posts),
+                                                                "Paýlaş",
+                                                                Icons.share,
+                                                                () async {
+                                                                  await Share.share(
+                                                                      "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker");
+                                                                },
+                                                                posts,
+                                                              ),
                                                             ],
                                                           ),
                                                         ],
@@ -509,7 +510,8 @@ class _PostsPageState extends State<PostsPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              columnMethod(index, posts),
+                                              columnMethod(
+                                                  index, posts, context),
                                               const SizedBox(height: 10),
                                               Padding(
                                                 padding:
@@ -572,6 +574,12 @@ class _PostsPageState extends State<PostsPage> {
                                         ),
                                       ),
                                     ),
+                        ),
+                      ),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
                         ),
                       ),
                     ],

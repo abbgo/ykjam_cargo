@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ykjam_cargo/datas/post_data.dart';
+import 'package:ykjam_cargo/helpers/font_size.dart';
 
 ElevatedButton elevatedButtonMethod(
     String text, IconData icon, Function()? onPressed, List<Post> posts) {
@@ -19,7 +20,7 @@ ElevatedButton elevatedButtonMethod(
   );
 }
 
-Column columnMethod(int index, List<Post> posts) {
+Column columnMethod(int index, List<Post> posts, BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -63,9 +64,9 @@ Column columnMethod(int index, List<Post> posts) {
       const SizedBox(height: 5),
       Text(
         posts[index].title,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontSize: calculateFontSize(context, 16),
         ),
       ),
     ],

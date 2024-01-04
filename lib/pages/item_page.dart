@@ -7,6 +7,7 @@ import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/item_page_methods.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 import 'package:ykjam_cargo/pages/show_image_page.dart';
@@ -149,6 +150,8 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return ChangeNotifierProvider<LocalStoradge>(
       create: (context) => LocalStoradge(),
       child: Scaffold(
@@ -161,12 +164,10 @@ class _ItemPageState extends State<ItemPage> {
                   slivers: [
                     _loading
                         ? SliverAppBar(
-                            expandedHeight:
-                                MediaQuery.of(context).size.height * 0.35,
+                            expandedHeight: screenHeight * 0.35,
                           )
                         : SliverAppBar(
-                            expandedHeight:
-                                MediaQuery.of(context).size.height * 0.35,
+                            expandedHeight: screenHeight * 0.35,
                             leading: GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
@@ -270,20 +271,35 @@ class _ItemPageState extends State<ItemPage> {
                                           ),
                                           Text(
                                             item.name,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                              fontSize: calculateFontSize(
+                                                  context, 20),
                                             ),
                                           ),
-                                          Text("Kody: ${item.code}"),
+                                          Text(
+                                            "Kody: ${item.code}",
+                                            style: TextStyle(
+                                              fontSize: calculateFontSize(
+                                                  context, 18),
+                                            ),
+                                          ),
                                           Row(
                                             children: [
-                                              const Text("Senesi: "),
+                                              Text(
+                                                "Senesi: ",
+                                                style: TextStyle(
+                                                  fontSize: calculateFontSize(
+                                                      context, 18),
+                                                ),
+                                              ),
                                               Text(
                                                 item.date,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: calculateFontSize(
+                                                      context, 18),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -314,11 +330,12 @@ class _ItemPageState extends State<ItemPage> {
                                                   rowMethod(
                                                       "Haryt sany: ",
                                                       widget.invenItemCount
-                                                          .toString()),
+                                                          .toString(),
+                                                      context),
                                                   rowMethod("Göwrümi: ",
-                                                      item.cubeText),
+                                                      item.cubeText, context),
                                                   rowMethod("Agramy: ",
-                                                      item.weightText),
+                                                      item.weightText, context),
                                                   Row(
                                                     children: [
                                                       RichText(
@@ -356,15 +373,25 @@ class _ItemPageState extends State<ItemPage> {
                                                       ),
                                                       rowMethod(
                                                           " düşýän paý agramy: ",
-                                                          item.cubeWeightText),
+                                                          item.cubeWeightText,
+                                                          context),
                                                     ],
                                                   ),
-                                                  rowMethod("Artyk agramy: ",
-                                                      item.extraWeightText),
+                                                  rowMethod(
+                                                      "Artyk agramy: ",
+                                                      item.extraWeightText,
+                                                      context),
                                                   const SizedBox(height: 10),
                                                   Row(
                                                     children: [
-                                                      const Text("*Bellik: "),
+                                                      Text(
+                                                        "*Bellik: ",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                calculateFontSize(
+                                                                    context,
+                                                                    14)),
+                                                      ),
                                                       RichText(
                                                         text: TextSpan(
                                                           children: [
@@ -400,7 +427,8 @@ class _ItemPageState extends State<ItemPage> {
                                                       ),
                                                       rowMethod(
                                                           " rugsat berilen agram: ",
-                                                          item.supposedWeightText),
+                                                          item.supposedWeightText,
+                                                          context),
                                                     ],
                                                   ),
                                                 ],
@@ -430,15 +458,23 @@ class _ItemPageState extends State<ItemPage> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      const Text(
+                                                      textWithoutBoldMethod(
                                                           "Jemi ýer sany:"),
-                                                      const Text(
+                                                      textWithoutBoldMethod(
                                                           "Jemi haryt sany:"),
-                                                      const Text(
+                                                      textWithoutBoldMethod(
                                                           "Jemi göwrümi:"),
                                                       Row(
                                                         children: [
-                                                          const Text("Jemi "),
+                                                          Text(
+                                                            "Jemi ",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
                                                           RichText(
                                                             text: TextSpan(
                                                               children: [
@@ -461,8 +497,6 @@ class _ItemPageState extends State<ItemPage> {
                                                                       textScaler:
                                                                           TextScaler.linear(
                                                                               0.7),
-                                                                      // textScaleFactor:
-                                                                      //     0.7,
                                                                       style: TextStyle(
                                                                           color:
                                                                               Colors.black),
@@ -472,12 +506,20 @@ class _ItemPageState extends State<ItemPage> {
                                                               ],
                                                             ),
                                                           ),
-                                                          const Text(" agramy"),
+                                                          Text(
+                                                            " agramy",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  calculateFontSize(
+                                                                      context,
+                                                                      14),
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
-                                                      const Text(
+                                                      textWithoutBoldMethod(
                                                           "Jemi rugsat berilen agram:"),
-                                                      const Text(
+                                                      textWithoutBoldMethod(
                                                           "Jemi artyk agramy:"),
                                                     ],
                                                   ),
@@ -488,21 +530,31 @@ class _ItemPageState extends State<ItemPage> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      textMethod(widget
-                                                          .invenItemCount
-                                                          .toString()),
-                                                      textMethod(widget
-                                                          .invenItemStuk
-                                                          .toString()),
-                                                      textMethod(item
-                                                          .total.totalCubeText),
-                                                      textMethod(item.total
-                                                          .totalCubeWeightText),
+                                                      textMethod(
+                                                          widget.invenItemCount
+                                                              .toString(),
+                                                          context),
+                                                      textMethod(
+                                                          widget.invenItemStuk
+                                                              .toString(),
+                                                          context),
+                                                      textMethod(
+                                                          item.total
+                                                              .totalCubeText,
+                                                          context),
+                                                      textMethod(
+                                                          item.total
+                                                              .totalCubeWeightText,
+                                                          context),
                                                       const Text(""),
-                                                      textMethod(item.total
-                                                          .totalSupposedWeightText),
-                                                      textMethod(item.total
-                                                          .totalExtraWeightText),
+                                                      textMethod(
+                                                          item.total
+                                                              .totalSupposedWeightText,
+                                                          context),
+                                                      textMethod(
+                                                          item.total
+                                                              .totalExtraWeightText,
+                                                          context),
                                                     ],
                                                   ),
                                                 ),
@@ -515,8 +567,11 @@ class _ItemPageState extends State<ItemPage> {
                                   ],
                       ),
                     ),
-                    const SliverFillRemaining(
-                      hasScrollBody: true,
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: SizedBox(
+                        height: screenHeight * 0.2,
+                      ),
                     ),
                   ],
                 ),
@@ -531,6 +586,15 @@ class _ItemPageState extends State<ItemPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Text textWithoutBoldMethod(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: calculateFontSize(context, 14),
       ),
     );
   }

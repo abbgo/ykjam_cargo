@@ -8,6 +8,7 @@ import 'package:ykjam_cargo/datas/service_price_data.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
 
 class ServicePrices extends StatefulWidget {
@@ -128,7 +129,9 @@ class _ServicePricesState extends State<ServicePrices> {
                                           data: prices[index].description,
                                           style: {
                                             'body': Style(
-                                              fontSize: FontSize(16),
+                                              fontSize: FontSize(
+                                                  calculateFontSize(
+                                                      context, 18)),
                                             ),
                                           },
                                         ),
@@ -139,7 +142,8 @@ class _ServicePricesState extends State<ServicePrices> {
                                             "${prices[index].priceTxt}    ",
                                             style: TextStyle(
                                               color: Colors.green.shade800,
-                                              fontSize: 22,
+                                              fontSize: calculateFontSize(
+                                                  context, 20),
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -150,8 +154,11 @@ class _ServicePricesState extends State<ServicePrices> {
                                 ),
                     ),
                   ),
-                  const SliverFillRemaining(
-                    hasScrollBody: true,
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
                   ),
                 ],
               ),

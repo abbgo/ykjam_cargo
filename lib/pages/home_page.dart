@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ykjam_cargo/datas/contact_data.dart';
@@ -32,15 +31,7 @@ class _HomePageState extends State<HomePage> {
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
     notificationServices.isRefresh();
-    notificationServices.getDeviceToken().then((value) {
-      // print("---------------------------------------------------");
-      // print("device token: $value");
-
-      if (kDebugMode) {
-        print("---------------------------------------------------");
-        print("device token: $value");
-      }
-    });
+    notificationServices.getDeviceToken().then((value) {});
 
     _getContact();
   }
@@ -204,48 +195,14 @@ class _HomePageState extends State<HomePage> {
                                 5,
                                 context,
                                 userToken, []),
-                            // listTileMethod(
-                            //     "${staticData.getStaticFilePath()}/news.webp",
-                            //     "Täzelikler (Cooming soon)",
-                            //     "",
-                            //     true,
-                            //     6,
-                            //     context,
-                            //     userToken, []),
-                            TextButton(
-                              onPressed: () {
-                                notificationServices
-                                    .getDeviceToken()
-                                    .then((value) async {
-                                  var data = {
-                                    'to': value.toString(),
-                                    'priority': 'high',
-                                    'notification': {
-                                      'title': 'Hello',
-                                      'body':
-                                          'Allanur Bayramgeldiyev developer',
-                                    },
-                                    'data': {
-                                      'type': 'msj',
-                                      'id': '12345',
-                                    },
-                                  };
-
-                                  await http.post(
-                                    Uri.parse(
-                                        'https://fcm.googleapis.com/fcm/send'),
-                                    body: jsonEncode(data),
-                                    headers: {
-                                      'Content-Type':
-                                          'application/json; charset=UTF-8',
-                                      'Authorization':
-                                          'key=AAAAicWWzm4:APA91bGeeVJXq08XN8Pz83APZkvIrDlZO9cfVnL9PJz5HWA80y7tr-y211gr5wIRrFg2bep2FW5UvrMUezodFHHhDzIf5Zgq0Tok4f8H-vl4wFeGpYScwFdYNtdX8Fk14elmUvQ-ffw-',
-                                    },
-                                  );
-                                });
-                              },
-                              child: const Text('Send Notification'),
-                            ),
+                            listTileMethod(
+                                "${staticData.getStaticFilePath()}/news.webp",
+                                "Täzelikler (Cooming soon)",
+                                "",
+                                true,
+                                6,
+                                context,
+                                userToken, []),
                           ],
                         ),
                       ],
