@@ -57,6 +57,31 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
+  changeNotify() async {
+    StaticData staticData = StaticData();
+
+    if (!_internetConnection) {
+      String fcmtoken = "";
+      int enableNotify = 0;
+
+      if (context.mounted) {
+        final localStoragde =
+            Provider.of<LocalStoradge>(context, listen: false);
+        await localStoragde.getFcmTokenFromSharedPref();
+        fcmtoken = localStoragde.getFcmToken();
+      }
+
+      if (_isSwitched) {
+        enableNotify = 0;
+      }
+
+      http.put(
+        Uri.parse(
+            "${staticData.getUrl()}/enable_notify?fcm=$fcmtoken&set=$enableNotify"),
+      );
+    }
+  }
+
   // DISPOSE -------------------------------------------------------------------
   @override
   void dispose() {
@@ -339,6 +364,42 @@ class _SettingPageState extends State<SettingPage> {
                                   setState(() {
                                     _isSwitched = value;
                                   });
+
+                                  changeNotify();
+
+                                  if (!_isSwitched) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: const Text(
+                                            "Üns beriň !",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          content: const Text(
+                                              "Bu siziň harytlaryňyzdaky hereketiň duýduryşyna degişli däldir! Harytlaryňyzyň duýduryşlary açykdyr!"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "OK",
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
                                 },
                                 activeColor: Theme.of(context).primaryColor,
                               ),

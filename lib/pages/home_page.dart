@@ -7,7 +7,6 @@ import 'package:ykjam_cargo/datas/contact_data.dart';
 import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
-import 'package:ykjam_cargo/helpers/notification_service.dart';
 import 'package:ykjam_cargo/methods/home_page_methods.dart';
 import 'package:ykjam_cargo/pages/chat_page.dart';
 import 'package:ykjam_cargo/pages/setting_page.dart';
@@ -26,13 +25,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    notificationServices.requestNotificationPermission();
-    notificationServices.foregroundMessage();
-    notificationServices.firebaseInit(context);
-    notificationServices.setupInteractMessage(context);
-    notificationServices.isRefresh();
-    notificationServices.getDeviceToken().then((value) {});
-
     _getContact();
   }
 
@@ -44,8 +36,6 @@ class _HomePageState extends State<HomePage> {
   StaticData staticData = StaticData();
   List<Contact> contacts = [];
   String guestToken = "";
-
-  NotificationServices notificationServices = NotificationServices();
 
   // FUNCTIONS -----------------------------------------------------------------
   _getContact() async {

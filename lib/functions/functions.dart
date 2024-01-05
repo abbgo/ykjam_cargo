@@ -162,3 +162,36 @@ class FuncResult {
 
   FuncResult(this.intConn, this.isload, this.token);
 }
+
+addFcmToken(String fcmToken, String userID, StaticData staticData, String token,
+    BuildContext context) async {
+  Map<String, dynamic> body;
+  String fcmtoken = "";
+
+  if (context.mounted) {
+    final localStoragde = Provider.of<LocalStoradge>(context, listen: false);
+    await localStoragde.getFcmTokenFromSharedPref();
+    fcmtoken = localStoragde.getFcmToken();
+  }
+
+  if (fcmtoken == "") {
+    final deviceName = await getDeviceName();
+
+    body = {
+      "token": fcmToken,
+      "id": userID,
+      "device": deviceName,
+      "from": "cargo_ios_app"
+    };
+
+    http.post(
+      Uri.parse("${staticData.getUrl()}/add_token?key=$token"),
+      body: json.encode(body),
+    );
+
+    if (context.mounted) {
+      Provider.of<LocalStoradge>(context, listen: false)
+          .changeFcmToken(fcmtoken);
+    }
+  }
+}

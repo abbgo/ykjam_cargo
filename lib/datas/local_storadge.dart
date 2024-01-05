@@ -6,6 +6,7 @@ class LocalStoradge with ChangeNotifier {
   static late SharedPreferences _sharedPrefOject;
 
   String _guestToken = "";
+  String _fcmPushNotificationToken = "";
   String _userToken = "";
   String _userCode = "";
   String _userName = "";
@@ -67,6 +68,25 @@ class LocalStoradge with ChangeNotifier {
   void changeGuestToken(String token) {
     _guestToken = token;
     saveGuestTokenToSharedPref(_guestToken);
+    notifyListeners();
+  }
+
+  // FCM TOKEN FUNCTIONS
+  String getFcmToken() => _fcmPushNotificationToken;
+
+  saveFcmTokenToSharedPref(String value) {
+    _sharedPrefOject.setString("fcm_token", value);
+  }
+
+  getFcmTokenFromSharedPref() {
+    if (_sharedPrefOject.getString("fcm_token") != null) {
+      _guestToken = _sharedPrefOject.getString("fcm_token")!;
+    }
+  }
+
+  void changeFcmToken(String token) {
+    _fcmPushNotificationToken = token;
+    saveFcmTokenToSharedPref(_fcmPushNotificationToken);
     notifyListeners();
   }
 

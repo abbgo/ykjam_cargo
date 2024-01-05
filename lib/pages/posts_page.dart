@@ -477,7 +477,7 @@ class _PostsPageState extends State<PostsPage> {
                                                                 Icons.share,
                                                                 () async {
                                                                   await Share.share(
-                                                                      "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker");
+                                                                      "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker ýa-da App Store-dan ýükle: https://apps.apple.com/us/app/ykjam-cargo/id6475161245");
                                                                 },
                                                                 posts,
                                                               ),
@@ -561,7 +561,7 @@ class _PostsPageState extends State<PostsPage> {
                                                     GestureDetector(
                                                       onTap: () async {
                                                         await Share.share(
-                                                            "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker");
+                                                            "Ykjam Cargo ${posts[index].title} Düşündiriş: ${posts[index].description.substring(0, 31)}... Bildirişi doly okamak üçin Play Google-dan ýükle: https://play.google.com/store/apps/details?id=com.grsofts.cargotracker ýa-da App Store-dan ýükle: https://apps.apple.com/us/app/ykjam-cargo/id6475161245");
                                                       },
                                                       child: const Icon(
                                                           Icons.share),

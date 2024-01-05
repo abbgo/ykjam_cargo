@@ -2,10 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:ykjam_cargo/datas/local_storadge.dart';
 import 'package:ykjam_cargo/datas/static_data.dart';
 import 'package:ykjam_cargo/functions/functions.dart';
+import 'package:ykjam_cargo/helpers/notification_service.dart';
 import 'package:ykjam_cargo/methods/home_page_methods.dart';
 import 'package:ykjam_cargo/pages/home_page.dart';
 import 'package:ykjam_cargo/pages/start_page.dart';
@@ -13,7 +15,6 @@ import 'package:ykjam_cargo/pages/start_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Future.delayed(const Duration(seconds: 1));
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await LocalStoradge().createSharedPrefObject();
   await dotenv.load(fileName: ".env");
@@ -57,6 +58,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         guestToken = result.token;
       });
     });
+
+    requestNotificationPermission();
+    notificationServices.foregroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isRefresh();
+    notificationServices.getDeviceToken().then((fcmToken) {
+      addFcmToken(fcmToken, "0", staticData, guestToken, context);
+    });
   }
 
 // VARIABLES -------------------------------------------------------------------
@@ -64,6 +74,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   bool _internetConnection = true;
 
   String guestToken = "";
+
+  NotificationServices notificationServices = NotificationServices();
 
   handleNetworkConnection() async {
     final connectionResult = await checkNetwork();
@@ -74,6 +86,34 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         _isLoadingStartPage = false;
       }
     });
+  }
+
+  void requestNotificationPermission() async {
+    // Check the current permission status.
+    var status = await Permission.notification.status;
+
+    if (status == PermissionStatus.denied) {
+      // Request the permission.
+      status = await Permission.notification.request();
+
+      if (status == PermissionStatus.denied) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Duýduryşa rugsat berilmedi'),
+            content: const Text(
+                'Programma sazlamalarynda duýduryş rugsatlaryny açmagyňyzy haýyş edýäris.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Bolýar'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
 
   @override

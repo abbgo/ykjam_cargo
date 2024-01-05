@@ -216,6 +216,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             StaticData staticData = StaticData();
                             final connectionResult = await checkNetwork();
+                            String fcmtoken = "";
 
                             if (connectionResult) {
                               final deviceName = await getDeviceName();
@@ -253,12 +254,31 @@ class _LoginPageState extends State<LoginPage> {
                                   localStoradge.changeUserID(
                                       int.parse(loginJsonData['id']));
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const StagesPage(),
-                                    ),
-                                  );
+                                  if (context.mounted) {
+                                    final localStoragde =
+                                        Provider.of<LocalStoradge>(context,
+                                            listen: false);
+                                    await localStoragde
+                                        .getFcmTokenFromSharedPref();
+                                    fcmtoken = localStoragde.getFcmToken();
+                                  }
+
+                                  if (context.mounted) {
+                                    addFcmToken(
+                                        fcmtoken,
+                                        loginJsonData['id'].toString(),
+                                        staticData,
+                                        loginJsonData['token'],
+                                        context);
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const StagesPage(),
+                                      ),
+                                    );
+                                  }
 
                                   showToastMethod(
                                       "Hoş geldiňiz ${loginJsonData['name']}");
