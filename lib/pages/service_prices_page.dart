@@ -10,6 +10,7 @@ import 'package:ykjam_cargo/functions/functions.dart';
 import 'package:http/http.dart' as http;
 import 'package:ykjam_cargo/helpers/font_size.dart';
 import 'package:ykjam_cargo/methods/stages_page_methods.dart';
+import 'package:ykjam_cargo/pages/calculate_page.dart';
 
 class ServicePrices extends StatefulWidget {
   const ServicePrices({super.key});
@@ -118,37 +119,50 @@ class _ServicePricesState extends State<ServicePrices> {
                                   (index) => Container(
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 10),
-                                    padding: const EdgeInsets.all(5),
+                                    // padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Html(
-                                          data: prices[index].description,
-                                          style: {
-                                            'body': Style(
-                                              fontSize: FontSize(
-                                                  calculateFontSize(
-                                                      context, 18)),
-                                            ),
-                                          },
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            "${prices[index].priceTxt}    ",
-                                            style: TextStyle(
-                                              color: Colors.green.shade800,
-                                              fontSize: calculateFontSize(
-                                                  context, 20),
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                    child: ListTile(
+                                      title: Html(
+                                        data: prices[index].description,
+                                        style: {
+                                          'body': Style(
+                                            fontSize: FontSize(
+                                                calculateFontSize(context, 18)),
+                                          ),
+                                        },
+                                      ),
+                                      subtitle: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "  ${prices[index].priceTxt}",
+                                          style: TextStyle(
+                                            color: Colors.green.shade800,
+                                            fontSize:
+                                                calculateFontSize(context, 20),
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ],
+                                      ),
+                                      trailing: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CalculatePage(
+                                                price: prices[index],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.calculate,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -210,8 +210,12 @@ Padding listTileMethod(String image, String title, subTitle, bool isDisable,
                 _showModalBottomSheet(context);
                 return;
               }
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const StagesPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const StagesPage(),
+                ),
+              );
               break;
             case 1:
               Navigator.push(
