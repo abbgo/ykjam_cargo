@@ -128,7 +128,7 @@ class _CalculatePageState extends State<CalculatePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.all(18),
+                    padding: const EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       side: BorderSide(
@@ -177,7 +177,7 @@ class _CalculatePageState extends State<CalculatePage> {
                     "Hasapla",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -216,6 +216,24 @@ class _CalculatePageState extends State<CalculatePage> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(color: Colors.amber.shade200),
+                    margin: const EdgeInsets.only(top: 10, right: 20),
+                    padding: const EdgeInsets.all(8),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber,
+                          size: 30,
+                        ),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                              "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
+                        ),
+                      ],
                     ),
                   ),
                 ],
