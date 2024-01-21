@@ -171,6 +171,107 @@ class _CalculatePageState extends State<CalculatePage> {
                     //   result = result / 1000000;
                     // }
 
+                    if (result != 0) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Wrap(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Göwrümi:",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      "$cube sm³",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue.shade900,
+                                      ),
+                                    ),
+                                    Text(
+                                      " ${cube / 1000000} m³",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue.shade900,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 30),
+                                    const Text(
+                                      "Baha:",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${cube / 1000000}m³ * ${widget.price.price}\$ =  $result\$",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue.shade900,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 30),
+                                    Container(
+                                      color: Colors.amber.shade200,
+                                      child: const ListTile(
+                                        leading: Icon(
+                                          Icons.warning_amber,
+                                          size: 30,
+                                        ),
+                                        subtitle: Text(
+                                            "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
+                                      ),
+                                    ),
+                                    // Container(
+
+                                    //   decoration: BoxDecoration(
+                                    //       color: Colors.amber.shade200),
+                                    //   margin:
+                                    //       const EdgeInsets.only(top: 10, right: 20),
+                                    //   padding: const EdgeInsets.all(8),
+                                    //   child: const Row(
+                                    //     children: [
+                                    //       Icon(
+                                    //         Icons.warning_amber,
+                                    //         size: 30,
+                                    //       ),
+                                    //       SizedBox(width: 5),
+                                    //       Expanded(
+                                    //         child: Text(
+                                    //             "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Bolýar"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+
                     setState(() {});
                   },
                   child: const Text(
@@ -184,63 +285,63 @@ class _CalculatePageState extends State<CalculatePage> {
               ),
             ],
           ),
-          if (result != 0)
-            Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Göwrümi: $cube sm³",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90, bottom: 10),
-                    child: Text(
-                      " ${cube / 1000000} m³",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "Baha: ${cube / 1000000}m³ * ${widget.price.price}\$ =  $result\$",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.amber.shade200),
-                    margin: const EdgeInsets.only(top: 10, right: 20),
-                    padding: const EdgeInsets.all(8),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.warning_amber,
-                          size: 30,
-                        ),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                              "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          else
-            const SizedBox(),
+          // if (result != 0)
+          //   Padding(
+          //     padding: const EdgeInsets.only(top: 20, left: 20),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text(
+          //           "Göwrümi: $cube sm³",
+          //           style: const TextStyle(
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.green,
+          //           ),
+          //         ),
+          //         Padding(
+          //           padding: const EdgeInsets.only(left: 90, bottom: 10),
+          //           child: Text(
+          //             " ${cube / 1000000} m³",
+          //             style: const TextStyle(
+          //               fontSize: 18,
+          //               fontWeight: FontWeight.bold,
+          //               color: Colors.green,
+          //             ),
+          //           ),
+          //         ),
+          //         Text(
+          //           "Baha: ${cube / 1000000}m³ * ${widget.price.price}\$ =  $result\$",
+          //           style: const TextStyle(
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.green,
+          //           ),
+          //         ),
+          //         Container(
+          //           decoration: BoxDecoration(color: Colors.amber.shade200),
+          //           margin: const EdgeInsets.only(top: 10, right: 20),
+          //           padding: const EdgeInsets.all(8),
+          //           child: const Row(
+          //             children: [
+          //               Icon(
+          //                 Icons.warning_amber,
+          //                 size: 30,
+          //               ),
+          //               SizedBox(width: 5),
+          //               Expanded(
+          //                 child: Text(
+          //                     "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   )
+          // else
+          //   const SizedBox(),
         ],
       ),
     );
