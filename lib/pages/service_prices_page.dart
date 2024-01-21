@@ -65,6 +65,7 @@ class _ServicePricesState extends State<ServicePrices> {
             data['price'],
             data['price_txt'],
             data['description'],
+            data['is_calculation'],
           );
           setState(() {
             prices.add(price);
@@ -146,23 +147,26 @@ class _ServicePricesState extends State<ServicePrices> {
                                           ),
                                         ),
                                       ),
-                                      trailing: IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CalculatePage(
-                                                price: prices[index],
+                                      trailing: prices[index].isCalculation
+                                          ? IconButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CalculatePage(
+                                                      price: prices[index],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.calculate,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.calculate,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
+                                            )
+                                          : const SizedBox(),
                                     ),
                                   ),
                                 ),
