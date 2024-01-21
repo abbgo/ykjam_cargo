@@ -15,7 +15,7 @@ class CalculatePage extends StatefulWidget {
 }
 
 class _CalculatePageState extends State<CalculatePage> {
-  String _selectedValue = "Metr";
+  // String _selectedValue = "Metr";
 
   final TextEditingController _width = TextEditingController();
   final TextEditingController _height = TextEditingController();
@@ -23,6 +23,7 @@ class _CalculatePageState extends State<CalculatePage> {
   final TextEditingController _quantity = TextEditingController();
 
   num result = 0;
+  num cube = 0;
 
   void _showSnackbar(BuildContext context, String input) {
     var snackBar = SnackBar(
@@ -88,40 +89,40 @@ class _CalculatePageState extends State<CalculatePage> {
             ),
           ),
           const SizedBox(height: 20),
-          inputMethod(" Ini ", _width),
-          inputMethod(" Boýy ", _height),
-          inputMethod(" Uzynlygy ", _length),
-          inputMethod(" Sany ", _quantity),
+          inputMethod(" Ini ", _width, 0),
+          inputMethod(" Boýy ", _height, 1),
+          inputMethod(" Uzynlygy ", _length, 2),
+          inputMethod(" Sany ", _quantity, 3),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: const EdgeInsets.only(left: 20),
-                padding: const EdgeInsets.all(5),
-                child: DropdownButton<String>(
-                  underline: const SizedBox(),
-                  borderRadius: BorderRadius.circular(10),
-                  value: _selectedValue, // Track the selected value
-                  items: <String>['Metr', 'Santimetr']
-                      .map<DropdownMenuItem<String>>(
-                    (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    },
-                  ).toList(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedValue = newValue!;
-                    });
-                  },
-                ),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     border: Border.all(),
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   margin: const EdgeInsets.only(left: 20),
+              //   padding: const EdgeInsets.all(5),
+              //   child: DropdownButton<String>(
+              //     underline: const SizedBox(),
+              //     borderRadius: BorderRadius.circular(10),
+              //     value: _selectedValue, // Track the selected value
+              //     items: <String>['Metr', 'Santimetr']
+              //         .map<DropdownMenuItem<String>>(
+              //       (String value) {
+              //         return DropdownMenuItem<String>(
+              //           value: value,
+              //           child: Text(value),
+              //         );
+              //       },
+              //     ).toList(),
+              //     onChanged: (newValue) {
+              //       setState(() {
+              //         _selectedValue = newValue!;
+              //       });
+              //     },
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: ElevatedButton(
@@ -154,15 +155,21 @@ class _CalculatePageState extends State<CalculatePage> {
                       return;
                     }
 
-                    result = num.parse(_width.text) *
+                    result = (num.parse(_width.text) *
+                            num.parse(_height.text) *
+                            num.parse(_length.text) *
+                            num.parse(_quantity.text) *
+                            widget.price.price) /
+                        1000000;
+
+                    cube = num.parse(_width.text) *
                         num.parse(_height.text) *
                         num.parse(_length.text) *
-                        num.parse(_quantity.text) *
-                        widget.price.price;
+                        num.parse(_quantity.text);
 
-                    if (_selectedValue == "Santimetr") {
-                      result = result / 1000000;
-                    }
+                    // if (_selectedValue == "Santimetr") {
+                    //   result = result / 1000000;
+                    // }
 
                     setState(() {});
                   },
@@ -177,27 +184,52 @@ class _CalculatePageState extends State<CalculatePage> {
               ),
             ],
           ),
-          result != 0
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 80),
-                  child: Center(
+          if (result != 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 20, left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Göwrümi: $cube sm³",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90, bottom: 10),
                     child: Text(
-                      "Netije: $result \$",
+                      " ${cube / 1000000} m³",
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
                       ),
                     ),
                   ),
-                )
-              : const SizedBox(),
+                  Text(
+                    "Baha: ${cube / 1000000}m³ * ${widget.price.price}\$ =  $result\$",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            const SizedBox(),
         ],
       ),
     );
   }
 
-  Padding inputMethod(String labelText, TextEditingController controller) {
+  Padding inputMethod(
+      String labelText, TextEditingController controller, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: TextField(
@@ -209,6 +241,7 @@ class _CalculatePageState extends State<CalculatePage> {
         decoration: InputDecoration(
           labelText: labelText,
           border: const OutlineInputBorder(),
+          suffixText: index != 3 ? "santimetr" : "sany",
         ),
       ),
     );
