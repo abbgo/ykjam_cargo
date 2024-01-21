@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:ykjam_cargo/database/db.dart';
+import 'package:ykjam_cargo/datas/history.dart';
 import 'package:ykjam_cargo/datas/service_price_data.dart';
+import 'package:intl/intl.dart';
 import 'package:ykjam_cargo/helpers/font_size.dart';
 
 // ignore: must_be_immutable
@@ -198,7 +201,7 @@ class _CalculatePageState extends State<CalculatePage> {
                                       ),
                                     ),
                                     Text(
-                                      " ${cube / 1000000} m³",
+                                      "${cube / 1000000} m³",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -234,37 +237,36 @@ class _CalculatePageState extends State<CalculatePage> {
                                             "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
                                       ),
                                     ),
-                                    // Container(
-
-                                    //   decoration: BoxDecoration(
-                                    //       color: Colors.amber.shade200),
-                                    //   margin:
-                                    //       const EdgeInsets.only(top: 10, right: 20),
-                                    //   padding: const EdgeInsets.all(8),
-                                    //   child: const Row(
-                                    //     children: [
-                                    //       Icon(
-                                    //         Icons.warning_amber,
-                                    //         size: 30,
-                                    //       ),
-                                    //       SizedBox(width: 5),
-                                    //       Expanded(
-                                    //         child: Text(
-                                    //             "Ýokardaky baha takmynan bahadyr. Käbir ýagdaýlar sebäpli baha üýtgäp biler !"),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ],
                             ),
                             actions: [
                               TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
+                                onPressed: () async {
+                                  DateTime now = DateTime.now();
+                                  String formattedDateTime =
+                                      DateFormat('yyyy-MM-dd HH:mm:ss')
+                                          .format(now);
+                                  final historyDatabase = HistoryDatabase();
+                                  final history = History(
+                                      num.parse(_height.text),
+                                      num.parse(_width.text),
+                                      num.parse(_length.text),
+                                      widget.price.price,
+                                      int.parse(_quantity.text),
+                                      formattedDateTime);
+
+                                  await historyDatabase
+                                      .insertHistory(history)
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                  });
                                 },
-                                child: const Text("Bolýar"),
+                                child: const Text(
+                                  "Bolýar",
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                             ],
                           );

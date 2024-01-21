@@ -1,37 +1,51 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:ykjam_cargo/datas/history.dart';
 
-class SqliteService {
-  Future<Database> initializeDB() async {
-    String path = await getDatabasesPath();
+class HistoryDatabase {
+  Database? _database;
 
-    return openDatabase(
-      join(path, 'ykjamCargo.db'),
-      onCreate: (db, version) async {
-        await db.execute(
-            "CREATE TABLE histories (id INTEGER PRIMARY KEY AUTOINCREMENT, height REAL, width REAL, lenght REAL, quantity INTEGER, price REAL, date TEXT);");
-      },
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await initDatabase();
+    return _database!;
+  }
+
+  Future<Database> initDatabase() async {
+    final path = join(await getDatabasesPath(), 'ykjam_cargo.db');
+
+    return await openDatabase(
+      path,
       version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE histories (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            height REAL,
+            width REAL,
+            lenght REAL,
+            quantity INTEGER,
+            price REAL,
+            date TEXT
+          )
+        ''');
+      },
     );
   }
 
-  Future<void> createHistory(History history) async {
-    final db = await initializeDB();
-
-    await db.insert(
-      "histories",
-      history.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+  Future<void> insertHistory(History history) async {
+    final db = await database;
+    await db.insert('histories', history.toMap());
   }
 
-  // Future<List<History>> getHistories() async {
-  //   final db = await initializeDB();
+  Future<void> removeHistory(int id) async {
+    final db = await database;
+    await db.delete('histories', where: 'id = ?', whereArgs: [id]);
+  }
 
-  //   final List<Map<String, Object?>> queryResult =
-  //       await db.query("histories", orderBy: "date");
-
-  //       return queryResult.map((e) => null)
-  // }
+  Future<void> removeAllHistories() async {
+    final db = await database;
+    await db.delete('histories');
+  }
 }
